@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width" />
 <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
-var socket = io('http://192.168.0.119:9844');
+var socket = io();
 socket.on('colorSet', function(data){
 	updateSliders(data);
 });
