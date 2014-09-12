@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RGB DISCO!!!</title>
+<meta name="viewport" content="width=device-width" />
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+var socket = io('http://192.168.0.119:9844');
+socket.on('colorSet', function(data){
+	updateSliders(data);
+});
+
+function setColor(red, green, blue){
+	socket.emit('color', { red: red, green: green, blue: blue });
+}
+
+function getSlidersFromDOM(){
+	var container = document.querySelector('#colorPicker');
+	var redSlider = container.querySelector('input[data-color=red]');
+	var greenSlider = container.querySelector('input[data-color=green]');
+	var blueSlider = container.querySelector('input[data-color=blue]');
+	return {
+		red: redSlider,
+		green: greenSlider,
+		blue: blueSlider
+	};
+}
+
+function updateSliders(RGB){
+	var sliders = getSlidersFromDOM();
+	sliders.red.value = Number(RGB.red);
+	sliders.green.value = Number(RGB.green);
+	sliders.blue.value = Number(RGB.blue);
+	console.log('server-side update: (R,G,B) = (%f,%f,%f)', Number(sliders.red.value), Number(sliders.green.value), Number(sliders.blue.value));
+}
+
+function updateColorFromDOM(){
+	var sliders = getSlidersFromDOM();
+	setColor(Number(sliders.red.value), Number(sliders.green.value), Number(sliders.blue.value));
+	console.log('client-side update: (R,G,B) = (%f,%f,%f)', Number(sliders.red.value), Number(sliders.green.value), Number(sliders.blue.value));
+}
+
+window.document.addEventListener('DOMContentLoaded', function(){
+	console.log('Content loaded!');
+	var sliders = document.querySelector('#colorPicker').querySelectorAll('input[data-color]');
+	Array.prototype.forEach.call(sliders, function(colorControl){
+		colorControl.addEventListener('change', updateColorFromDOM);
+	});
+});
+</script>
+<style type="text/css">
+#colorPicker label{
+	display: block;
+	width: 98%;
+	text-align: center;
+	border: 1% solid gray;
+	border-radius: 0.25em 0.25em 0.25em 0.25em;
+	background-color: #EFEFEF;
+	margin-top: 0.5em;
+}
+#colorPicker input{
+	display: block;
+	width: 98%;
+	margin-left: 1%;
+}
+.red{
+	color: red;
+}
+.green{
+	color: green;
+}
+.blue{
+	color: blue;
+}
+</style>
+</head>
+<body>
+<form id="colorPicker">
+	<label class="red">RED <input type="range" min="0" max="1" step="0.005" data-color="red" /></label>
+	<label class="green">GREEN <input type="range" min="0" max="1" step="0.005" data-color="green" /></label>
+	<label class="blue">BLUE <input type="range" min="0" max="1" step="0.005" data-color="blue" /></label>
+</form>
+</body>
+</html>
