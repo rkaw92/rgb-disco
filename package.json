@@ -1,0 +1,31 @@
+{
+  "name": "rgb-disco",
+  "version": "0.1.0",
+  "description": "A PWM/RGB controller for Node.js running on GPIO-enabled devices such as Intel Galileo.",
+  "main": "RGBController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rkaw92/rgb-disco.git"
+  },
+  "keywords": [
+    "galileo",
+    "pwm",
+    "rgb",
+    "light",
+    "lighting",
+    "gpio",
+    "electronics"
+  ],
+  "author": "Robert Kawecki <robert+npm@rkaw.pl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rkaw92/rgb-disco/issues"
+  },
+  "homepage": "https://github.com/rkaw92/rgb-disco",
+  "dependencies": {
+    "when": "^3.4.5"
+  }
+}
